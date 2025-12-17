@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch LWJGL Main Class",
+            "request": "launch",
+            "mainClass": "com.project3.App", // Based on your stack trace
+            "projectName": "project3",
+            
+            // CRITICAL FIX: ADD THIS ARGUMENT
+          "vmArgs": "--illegal-access=permit --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED -Djava.library.path=${workspaceFolder}/target/natives"
+        },
+        // ... (Repeat for the "Launch Current File" configuration)
+    ]
+}
