@@ -2,16 +2,16 @@ package com.project3.lamplight.model;
 
 public class RawModel {
 
-    private int vboID;
+    private int vaoID;
     private int vertexCount;
 
     public RawModel(int vboID, int vertexCount) {
-        this.vboID = vboID;
+        this.vaoID = vboID;
         this.vertexCount = vertexCount;
     }
 
-    public int getVboID() {
-        return vboID;
+    public int getVaoID() {
+        return vaoID;
     }
 
     public int getVertexCount() {

@@ -3,31 +3,47 @@ package com.project3.lamplight.renderer;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
 
+import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL30;
+import org.lwjgl.util.vector.Matrix4f;
+
+import com.project3.Render.Texture.ModelTexture;
+import com.project3.Util.Maths;
 import com.project3.lamplight.model.Entity;
 import com.project3.lamplight.model.RawModel;
 
 public class Renderer {
 
-    public void render(Entity entity) {
+  public void render(Entity entity) {
 
-        RawModel model = entity.getModel();
+    RawModel model = entity.getModel();
 
-        glBindBuffer(GL_ARRAY_BUFFER, model.getVboID());
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glVertexPointer(3, GL_FLOAT, 0, 0L);
+    // Bind VAO
+    GL30.glBindVertexArray(model.getVaoID());
 
-        // -------- APPLY TRANSFORM --------
-        glPushMatrix();
+    // Enable attributes
+    GL20.glEnableVertexAttribArray(0); // position
+    GL20.glEnableVertexAttribArray(1); // texture
+    GL20.glEnableVertexAttribArray(2); // normal
 
-        glTranslatef(entity.getX(), entity.getY(), entity.getZ());
-        glScalef(entity.getScale(), entity.getScale(), entity.getScale());
+    // Apply transform
+    glPushMatrix();
+    glTranslatef(entity.getX(), entity.getY(), entity.getZ());
+    glScalef(entity.getScale(), entity.getScale(), entity.getScale());
 
-        glDrawArrays(GL_TRIANGLES, 0, model.getVertexCount());
+    // Draw
+    glDrawArrays(GL_TRIANGLES, 0, model.getVertexCount());
 
-        glPopMatrix();
+    // Restore matrix
+    glPopMatrix();
 
-        glDisableClientState(GL_VERTEX_ARRAY);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-    }
+    // Disable attributes
+    GL20.glDisableVertexAttribArray(0);
+    GL20.glDisableVertexAttribArray(1);
+    GL20.glDisableVertexAttribArray(2);
+
+    // Unbind VAO
+    GL30.glBindVertexArray(0);
+}
 
 }
